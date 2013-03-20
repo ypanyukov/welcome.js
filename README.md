@@ -1,4 +1,4 @@
-welcome.js
+Welcome.js
 ==========
 
 When you open site at first time you dont know him.
