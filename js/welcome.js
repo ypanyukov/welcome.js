@@ -4,8 +4,9 @@ var w = function(config){
         tooltip,
         tooltip_number,
         tooltip_text,
+        rug_close,
         rug,
-        rug_number,
+        rug_next,
         elements = [],
         currentElement = false,
         nodeElements,
@@ -90,7 +91,7 @@ var w = function(config){
         Tools.setCSS(welcome_node, "display", "block");
         
         oldBodyPaddingBottom = Tools.getCSS(document.body, "padding-bottom");
-        Tools.setCSS(document.body, "padding-bottom", "100px");
+        Tools.setCSS(document.body, "padding-bottom", Tools.height(tooltip));
         
         toLastState();
         
@@ -103,6 +104,7 @@ var w = function(config){
             
         Tools.setCSS(welcome_node, "display", "none");
         Tools.setCSS(document.body, "padding-bottom", oldBodyPaddingBottom);
+        Tools.removeClass(currentElement.el, "welcomeshowelements");
         
         toDefaultState();
         
@@ -118,6 +120,11 @@ var w = function(config){
         this.show();
         nextStep = step > elements.length ? 1 : step < 0 ? 1 : step;
         
+        if (step > elements.length){
+            this.hide();
+            return;
+        }
+        
         if(typeof currentElement == "object")
             Tools.removeClass(currentElement.el, "welcomeshowelements");
             
@@ -130,12 +137,11 @@ var w = function(config){
             )
             window.scrollTo(0, currentElement.top - window.innerHeight / 2);
         
-        Tools.setCSS(rug, "width", currentElement.width);
-        Tools.setCSS(rug, "height", currentElement.height);
-        Tools.setCSS(rug, "left", currentElement.left);
-        Tools.setCSS(rug, "top", currentElement.top);
+        Tools.setCSS(rug, "width", currentElement.width + 40);
+        Tools.setCSS(rug, "height", currentElement.height + 40);
+        Tools.setCSS(rug, "left", currentElement.left - 20);
+        Tools.setCSS(rug, "top", currentElement.top - 20);
         
-        rug_number.textContent = nextStep;
         tooltip_number.textContent = nextStep;
         tooltip_text.textContent = currentElement.el.getAttribute("data-text");
         Tools.addClass(currentElement.el, "welcomeshowelements");
@@ -150,48 +156,61 @@ var w = function(config){
         document.body.appendChild(welcome_node);
         
         var params_cover = {
-            "class": "cover"
+            "class": "wcover"
         };
         cover = Tools.elementCreate("div", params_cover);
         
         welcome_node.appendChild(cover);
         
         var params_rug = {
-            "class": "rug"
+            "class": "wrug"
         };
         rug = Tools.elementCreate("div", params_rug);
         
         welcome_node.appendChild(rug);
         
-        var params_rug_number = {
-            "class": "number"
+        var params_rug_next = {
+            "class": "wnext"
         };
-        rug_number = Tools.elementCreate("span", params_rug_number);
+        rug_next = Tools.elementCreate("span", params_rug_next);
         
-        rug.appendChild(rug_number);
+        rug.appendChild(rug_next);
+        rug_next.textContent = "next";
+        
+        var params_rug_close = {
+            "class": "wclose"
+        };
+        rug_close = Tools.elementCreate("span", params_rug_close);
+        
+        rug.appendChild(rug_close);
+        rug_close.textContent = "close";
+        
+        Tools.addEvent(rug_close, "click", function(){
+           _w.hide(); 
+        });
         
         var params_tooltip = {
-            "class": "tooltip"
+            "class": "wtooltip"
         };
         tooltip = Tools.elementCreate("div", params_tooltip);
         
         welcome_node.appendChild(tooltip);
         
         var params_tooltip_text = {
-            "class": "text"
+            "class": "wtext"
         };
         tooltip_text = Tools.elementCreate("div", params_tooltip_text);
         
         tooltip.appendChild(tooltip_text);
         
         var params_tooltip_number = {
-            "class": "number"
+            "class": "wnumber"
         };
         tooltip_number = Tools.elementCreate("span", params_tooltip_number);
         
         tooltip.appendChild(tooltip_number);
         
-        Tools.addEvent(rug_number, "click", function(){
+        Tools.addEvent(rug_next, "click", function(){
            _w.nextStep(); 
         });
         Tools.addEvent(tooltip_number, "click", function(){

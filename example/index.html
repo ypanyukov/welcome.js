@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<script src="../js/welcome.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/welcome.min.css"/>
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+
+<script src="init.js"></script>
+<link rel="stylesheet" type="text/css" href="css.css"/>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome.js</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+
+            <form class="form-signin" data-step="1" data-text="It is login form!">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <input type="text" class="input-block-level" placeholder="Email address">
+                <input type="password" class="input-block-level" placeholder="Password">
+                <label class="checkbox">
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+                <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+            </form>
+            
+        </div> <!-- /container -->
+        <div class="row" data-step="4" data-text="It is all container!">
+            <div class="span7" data-step="2" data-text="It is left container!">
+                <h1>Simple use</h1>              
+            </div>
+            <div class="span6" data-step="3" data-text="It is right container!">
+                <h1 data-step="5" data-text="About step5">I dont know what write here.</h1>
+            </div>
+            <div class="span2">
+                <div class="btn btn-info" id='welcome_action'>Click me!</div>
+            </span>
+        </div>
+    </div>
+</body>
+</html>
